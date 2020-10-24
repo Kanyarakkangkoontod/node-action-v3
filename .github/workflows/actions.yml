@@ -1,29 +1,29 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
+name: Node.js CI  # ชื่อ เวิร์คโฟ
 
-on:
-  push:
+on: # อีเวนที่จะถูกเรียกขึ้นมาทำงาน 
+  push: # คือ อีเวนที่จะเกิดขึ้น สามารถเกิดขึ้นได้กับทุก บลาน 
     branches: [ master ]
-  pull_request:
+  pull_request:   # ถ้ามีคนสร้าง PR ขึ้นมาจะเกิดการเรียกใช้ อีเวนนี้ 
     branches: [ master ]
 
-jobs:
-  build:
+jobs: # งาน
+  build: # ซึ่งเราจะบิ้วได้ก็ต่อเมื่อ ผ่านขั้นตอนต่อไปนี้
 
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [12.x, 14.x]  # บิ้วเทส 3 เวอร์ชั่น 
 
-    steps:
-    - uses: actions/checkout@v2
+    steps: # คือการบ่งบอกว่า จ็อบนี้จะทำงานอะไรบ้าง เป็นขั้นตอน
+    - uses: actions/checkout@v2 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - run: npm ci # สั่งให้มันเตรียมของขึ้นมา
+    - run: npm run build --if-present # สั่งสร้างขึ้นมาใช้งาน
+    - run: npm test # เทส ถ้าผ่าน 3 ขุ้นตอนนี้คือพร้อมใช้งาน
